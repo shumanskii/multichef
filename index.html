@@ -456,6 +456,34 @@ footer {
   .modal-box { padding: 32px 20px 28px; }
   .modal-content h2 { font-size: 20px; }
 }
+
+/* COOKIE BANNER */
+#cookie-banner {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 2000;
+  background: #1a1a1a; color: #ccc;
+  padding: 16px 24px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 20px; flex-wrap: wrap;
+  border-top: 1px solid rgba(200,168,75,0.3);
+  font-size: 13px; line-height: 1.5;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+#cookie-banner.show { transform: translateY(0); }
+#cookie-banner a { color: var(--gold); text-decoration: none; }
+#cookie-banner a:hover { text-decoration: underline; }
+.cookie-btn {
+  background: var(--gold); color: #000; border: none;
+  padding: 10px 24px; border-radius: 8px; cursor: pointer;
+  font-weight: 700; font-size: 13px; white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+}
+.cookie-btn-decline {
+  background: transparent; color: #999; border: 1px solid #444;
+  padding: 10px 16px; border-radius: 8px; cursor: pointer;
+  font-size: 13px; white-space: nowrap;
+  font-family: 'Inter', sans-serif;
+}
 </style>
 <script>
 const translations = {
@@ -497,6 +525,7 @@ const translations = {
     who5_title: "Магазины и АЗС", who5_text: "Горячая еда на ходу — один из самых прибыльных сегментов. SCRAEGG отлично работает в формате self-service.",
     who6_title: "Школы и университеты", who6_text: "Питательный горячий завтрак в любом формате. Быстро, гигиенично и без специальных навыков.",
     specs_label: "Технические характеристики", specs_title: "SCRAEGG Pro — технические данные",
+    spec_v1: "15 с", spec_v2: "1800W", spec_v3: "1,5 л", spec_v4: "70+", spec_v5: "30×30", spec_v6: "46,5",
     spec1: "Время приготовления одной порции", spec2: "Мощность, 230V / 50Hz",
     spec3: "Объём резервуара для воды", spec4: "Порций с одной заправки воды",
     spec5: "Площадь основания (см) — компактно", spec6: "Высота аппарата в сантиметрах",
@@ -579,6 +608,7 @@ const translations = {
     who5_title: "Obchody a čerpací stanice", who5_text: "Teplé jídlo na cestách — jeden z nejziskovějších segmentů. SCRAEGG skvěle funguje ve formátu self-service.",
     who6_title: "Školy a univerzity", who6_text: "Výživná teplá snídaně v jakémkoli formátu. Rychle, hygienicky a bez speciálních dovedností.",
     specs_label: "Technické specifikace", specs_title: "SCRAEGG Pro — technická data",
+    spec_v1: "15 s", spec_v2: "1800W", spec_v3: "1,5 l", spec_v4: "70+", spec_v5: "30×30", spec_v6: "46,5",
     spec1: "Čas přípravy jedné porce", spec2: "Výkon, 230V / 50Hz",
     spec3: "Objem nádrže na vodu", spec4: "Porcí z jedné náplně vody",
     spec5: "Plocha základny (cm) — kompaktní", spec6: "Výška přístroje v centimetrech",
@@ -769,6 +799,7 @@ function setLang(lang) {
 
   // Update sending button text if form is in progress
   window._currentLang = lang;
+  if (typeof updateCookieBannerLang === "function") updateCookieBannerLang(lang);
 }
 
 let currentLang = 'cs';
@@ -990,27 +1021,27 @@ document.addEventListener('DOMContentLoaded', function() {
     <h2 class="white" data-i18n="specs_title">SCRAEGG Pro — технические данные</h2>
     <div class="specs-grid">
       <div class="spec-item">
-        <div class="spec-val">15 с</div>
+        <div class="spec-val" data-i18n="spec_v1">15 с</div>
         <p data-i18n="spec1">Время приготовления одной порции</p>
       </div>
       <div class="spec-item">
-        <div class="spec-val">1800W</div>
+        <div class="spec-val" data-i18n="spec_v2">1800W</div>
         <p data-i18n="spec2">Мощность, 230V / 50Hz</p>
       </div>
       <div class="spec-item">
-        <div class="spec-val">1,5 л</div>
+        <div class="spec-val" data-i18n="spec_v3">1,5 л</div>
         <p data-i18n="spec3">Объём резервуара для воды</p>
       </div>
       <div class="spec-item">
-        <div class="spec-val">70+</div>
+        <div class="spec-val" data-i18n="spec_v4">70+</div>
         <p data-i18n="spec4">Порций с одной заправки воды</p>
       </div>
       <div class="spec-item">
-        <div class="spec-val">30×30</div>
+        <div class="spec-val" data-i18n="spec_v5">30×30</div>
         <p data-i18n="spec5">Площадь основания (см) — компактно</p>
       </div>
       <div class="spec-item">
-        <div class="spec-val">46,5</div>
+        <div class="spec-val" data-i18n="spec_v6">46,5</div>
         <p data-i18n="spec6">Высота аппарата в сантиметрах</p>
       </div>
     </div>
@@ -1085,6 +1116,9 @@ document.addEventListener('DOMContentLoaded', function() {
     <div class="form-wrap">
       <!-- Замените YOUR_FORM_ID на ваш ID из formspree.io -->
       <form id="contactForm" action="https://formspree.io/f/meerojkr" method="POST">
+        <input type="hidden" name="_replyto" id="_replyto">
+        <input type="hidden" name="_subject" value="Новая заявка SCRAEGG Pro — multichef.cz">
+        <input type="hidden" name="_next" value="https://multichef.cz/#contact">
         <div class="form-row">
           <div class="form-group">
             <label for="name" data-i18n="form_name">Имя *</label>
@@ -1178,6 +1212,14 @@ document.addEventListener('DOMContentLoaded', function() {
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Form submission
 const form = document.getElementById('contactForm');
+// Sync email to _replyto for Formspree auto-reply
+const emailInput = document.getElementById('email');
+const replytoInput = document.getElementById('_replyto');
+if (emailInput && replytoInput) {
+  emailInput.addEventListener('input', function() {
+    replytoInput.value = this.value;
+  });
+}
 const success = document.getElementById('formSuccess');
 
 if (form) {
