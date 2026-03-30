@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+body { font-family: Arial, sans-serif; color: #1a1a1a; line-height: 1.7; margin: 0; padding: 0; }
+a { color: #C8A84B; text-decoration: none; }
+.container { max-width: 600px; margin: 0; background: #fff; }
+.header { background: #1a1a1a; padding: 30px; text-align: center; border-bottom: 3px solid #C8A84B; }
+.logo { color: #C8A84B; font-size: 18px; font-weight: bold; margin-bottom: 10px; }
+.header h1 { color: #fff; font-size: 24px; margin: 10px 0; }
+.content { padding: 30px; }
+.event-box { background: #F5EDD3; border-left: 4px solid #C8A84B; padding: 15px; margin: 20px 0; }
+.event-item { margin-bottom: 10px; font-size: 14px; }
+.event-label { font-weight: bold; color: #C8A84B; min-width: 70px; display: inline-block; }
+.price-box { background: rgba(200,168,75,0.1); padding: 20px; text-align: center; margin: 20px 0; border-radius: 8px; }
+.price-value { font-size: 36px; font-weight: bold; color: #C8A84B; }
+.footer { padding: 20px; background: #F4F2EE; border-top: 1px solid #E8E2D6; font-size: 12px; text-align: center; color: #666; }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <div class="logo">SCRAEGG Pro</div>
+    <h1>Демонстрация</h1>
+    <p style="color: rgba(255,255,255,0.7); margin: 0;">Специальное приглашение</p>
+  </div>
+  
+  <div class="content">
+    <p style="margin-top: 0;">Добрый день, <strong>{{owner_name}}</strong>,</p>
+    
+    <p>Приглашаем Вас на демонстрацию SCRAEGG Pro — инновационного оборудования для приготовления скрамбла, каши, супа-пюре и других блюд за 15 секунд.</p>
+    
+    <p>Вы увидите технологию, которая может существенно расширить меню Вашего {{restaurant_name}} и привлечь новых клиентов. Оборудование не требует вытяжки и не создаёт нагрузку на горячую кухню.</p>
+    
+    <div class="event-box">
+      <div class="event-item"><span class="event-label">📅 Дата:</span> 16 апреля 2026</div>
+      <div class="event-item"><span class="event-label">⏰ Время:</span> 13:00 (Prague time)</div>
+      <div class="event-item"><span class="event-label">📍 Место:</span> The Miners Coffee, Horákové 684/16, 170 00 Praha 7-Holešovice</div>
+    </div>
+    
+    <p><strong>Программа встречи включает:</strong></p>
+    <ul>
+      <li>Демонстрацию работы SCRAEGG Pro на практике</li>
+      <li>Дегустацию приготовленных блюд</li>
+      <li>Консультацию по интеграции оборудования в Вашу кухню</li>
+      <li>Специальные условия для ресторанов и баров</li>
+      <li>Напитки и закуски во время встречи</li>
+    </ul>
+    
+    <div class="price-box">
+      <p style="margin: 0 0 10px 0; color: #666; font-size: 12px;">ВЗНОС ДЛЯ ПОДТВЕРЖДЕНИЯ УЧАСТИЯ</p>
+      <div class="price-value">300 Kč</div>
+      <p style="margin: 10px 0 0 0; font-size: 12px; color: #666;">Включает участие в программе и угощение</p>
+    </div>
+
+    <!-- Кнопки через table — работает во всех email-клиентах -->
+    <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 20px 0;">
+      <tr>
+        <td width="48%" style="padding-right: 8px;">
+          <a href="https://multichef.cz/#event"
+             style="display: block; background: #C8A84B; color: #1a1a1a; text-align: center;
+                    padding: 14px 20px; border-radius: 8px; font-weight: bold;
+                    font-size: 14px; text-decoration: none;">
+            Подробнее
+          </a>
+        </td>
+        <td width="48%" style="padding-left: 8px;">
+          <a href="https://buy.stripe.com/bJebJ14l14bzd20cQ7cwg09"
+             style="display: block; background: #1a1a1a; color: #fff; text-align: center;
+                    padding: 14px 20px; border-radius: 8px; font-weight: bold;
+                    font-size: 14px; text-decoration: none; border: 2px solid #C8A84B;">
+            Зарегистрироваться
+          </a>
+        </td>
+      </tr>
+    </table>
+    
+    <p style="font-size: 14px; margin-top: 30px; color: rgba(26,26,26,0.7);">
+      Если у Вас возникнут вопросы, пожалуйста, свяжитесь с нами: <a href="mailto:hello@multichef.cz">hello@multichef.cz</a>
+    </p>
+  </div>
+  
+  <div class="footer">
+    © 2026 SCRAEGG Pro. Все права защищены. | <a href="https://multichef.cz/">Посетить сайт</a>
+  </div>
+</div>
+</body>
+</html>
