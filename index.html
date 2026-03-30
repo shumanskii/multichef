@@ -158,15 +158,23 @@ h2.white { color: #fff; }
 }
 .sec-sub.white { color: rgba(255,255,255,0.6); }
 
-/* In-action photo */
-.in-action-img {
-  border-radius: 16px; overflow: hidden;
+/* In-action video */
+.in-action-video {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 */
+  height: 0;
+  border-radius: 16px;
+  overflow: hidden;
   margin-bottom: 40px;
-  max-height: 420px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.14);
+  border: 1px solid var(--border);
 }
-.in-action-img img {
-  width: 100%; height: 100%; object-fit: cover; display: block;
+.in-action-video iframe {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  border: 0;
 }
 
 /* HOW IT WORKS */
@@ -340,6 +348,9 @@ footer {
 .footer-bottom a:hover { color: var(--gold); }
 
 /* MOBILE */
+@media (max-width: 600px) {
+  .event-menu-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
 @media (max-width: 768px) {
   nav { padding: 0 16px; }
   .hero { padding: 100px 0 60px; }
@@ -558,7 +569,7 @@ const translations = {
     event_date_label: "Дата и время",
     event_date_val: "🗓 16 апреля 2026",
     event_place_label: "Место",
-    event_place: "Khromberry | Cakes & Brunch, Praha",
+    event_place: "The Miners Coffee Letna, Praha",
     event_included: "Напитки включены в стоимость участия",
     event_seats: "Количество мест ограничено",
     event_price: "300 Kč",
@@ -650,7 +661,7 @@ const translations = {
     event_date_label: "Datum a čas",
     event_date_val: "🗓 16. dubna 2026",
     event_place_label: "Místo",
-    event_place: "Khromberry | Cakes & Brunch, Praha",
+    event_place: "The Miners Coffee Letna, Praha",
     event_included: "Nápoje jsou zahrnuty v ceně účasti",
     event_seats: "Počet míst je omezený",
     event_price: "300 Kč",
@@ -740,7 +751,7 @@ const translations = {
     event_date_label: "Date & Time",
     event_date_val: "🗓 April 16, 2026",
     event_place_label: "Venue",
-    event_place: "Khromberry | Cakes & Brunch, Praha",
+    event_place: "The Miners Coffee Letna, Praha",
     event_included: "Drinks are included in the participation fee",
     event_seats: "Limited seats available",
     event_price: "300 Kč",
@@ -898,8 +909,14 @@ document.addEventListener('DOMContentLoaded', function() {
     <span class="sec-label" data-i18n="how_label">Как это работает</span>
     <h2 data-i18n="how_title">Три шага до готового блюда</h2>
     <p class="sec-sub" data-i18n="how_sub">Никаких навыков, обучения или сложных процессов. Любой сотрудник справится с первой попытки.</p>
-    <div class="in-action-img">
-      <img src="scraegg_yellow.png" alt="SCRAEGG Pro в кафе">
+    <div class="in-action-video">
+      <iframe
+        src="https://www.youtube.com/embed/gmwqIZ3ysaU?rel=0&modestbranding=1"
+        title="SCRAEGG Pro — live demo"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy">
+      </iframe>
     </div>
     <div class="steps">
       <div class="step">
@@ -1090,23 +1107,28 @@ document.addEventListener('DOMContentLoaded', function() {
     <h2 style="text-align:center;color:#fff;margin-bottom:12px;" data-i18n="event_title">Живая демонстрация SCRAEGG Pro</h2>
     <p style="text-align:center;color:rgba(255,255,255,0.65);max-width:580px;margin:0 auto 48px;" data-i18n="event_sub">Приходите попробовать блюда прямо с машины и убедиться, что это работает</p>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;max-width:860px;margin:0 auto 48px;">
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:32px;">
-        <div style="color:var(--gold);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px;" data-i18n="event_date_label">Дата и время</div>
-        <div style="font-size:24px;font-weight:700;color:#fff;margin-bottom:8px;" data-i18n="event_date_val">🗓 16 апреля 2026</div>
-        <div style="font-size:20px;color:rgba(255,255,255,0.8);">⏰ 13:00</div>
-      </div>
-      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:32px;">
-        <div style="color:var(--gold);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px;" data-i18n="event_place_label">Место</div>
-        <div style="font-size:18px;font-weight:600;color:#fff;margin-bottom:8px;">📍 Khromberry | Cakes & Brunch</div>
-        <div style="font-size:14px;color:rgba(255,255,255,0.65);">V Jirchářích 149/6<br>110 00 Nové Město, Praha</div>
+    <div style="max-width:680px;margin:0 auto 48px;">
+      <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:16px;padding:28px 32px;">
+        <div style="display:flex;flex-wrap:wrap;gap:24px;align-items:center;">
+          <div style="flex:1;min-width:160px;">
+            <div style="color:var(--gold);font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;" data-i18n="event_date_label">Дата и время</div>
+            <div style="font-size:20px;font-weight:700;color:#fff;margin-bottom:4px;" data-i18n="event_date_val">🗓 16 апреля 2026</div>
+            <div style="font-size:16px;color:rgba(255,255,255,0.8);">⏰ 13:00</div>
+          </div>
+          <div style="width:1px;height:60px;background:rgba(255,255,255,0.12);flex-shrink:0;"></div>
+          <div style="flex:1.5;min-width:180px;">
+            <div style="color:var(--gold);font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:8px;" data-i18n="event_place_label">Место</div>
+            <div style="font-size:16px;font-weight:600;color:#fff;margin-bottom:4px;">📍 The Miners Coffee Letna</div>
+            <div style="font-size:13px;color:rgba(255,255,255,0.65);">M. Horákové 684/16, 170 00 Praha 7-Holešovice</div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- МЕНЮ ДЕГУСТАЦИИ -->
     <div style="max-width:860px;margin:0 auto 48px;">
       <div style="color:var(--gold);font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;text-align:center;margin-bottom:24px;" data-i18n="event_menu_label">Меню дегустации — 8 блюд</div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;">
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;" class="event-menu-grid">
         <div style="background:rgba(255,255,255,0.05);border:1px solid rgba(200,168,75,0.15);border-radius:12px;padding:16px 14px;">
           <div style="font-size:13px;font-weight:600;color:#fff;" data-i18n="em1">Скрэмбл</div>
         </div>
