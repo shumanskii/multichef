@@ -589,11 +589,7 @@ const translations = {
     ereg_label: "Регистрация на презентацию",
     ereg_title: "Записаться на живую демонстрацию",
     ereg_sub: "Оставьте контакты — мы пришлём подтверждение с адресом и деталями встречи.",
-    ereg_btn: "Записаться на встречу →",
-    ereg_ok_title: "Вы зарегистрированы!",
-    ereg_ok_text: "Подтверждение отправлено вам на почту. Ждём вас 16 апреля в The Miners Coffee Letna!",
-    sending: "Отправляем...", error: "Ошибка. Попробуйте ещё раз.",
-  },
+    ereg_reset_btn: "Записать ещё одного →",
   cs: {
     nav_event: "Prezentace 5. dubna",
     nav_cta: "Získat nabídku",
@@ -687,6 +683,7 @@ const translations = {
     ereg_btn: "Přihlásit se na setkání →",
     ereg_ok_title: "Jste zaregistrováni!",
     ereg_ok_text: "Potvrzení bylo odesláno na váš e-mail. Těšíme se na vás 16. dubna v The Miners Coffee Letna!",
+    ereg_reset_btn: "Přihlásit dalšího účastníka →",
     sending: "Odesíláme...", error: "Chyba. Zkuste to znovu.",
   },
   en: {
@@ -781,6 +778,7 @@ const translations = {
     ereg_btn: "Register for the event →",
     ereg_ok_title: "You're registered!",
     ereg_ok_text: "A confirmation has been sent to your email. See you on April 16 at The Miners Coffee Letna!",
+    ereg_reset_btn: "Register another person →",
     sending: "Sending...", error: "Error. Please try again.",
   }
 };
@@ -1193,37 +1191,40 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- ФОРМА РЕГИСТРАЦИИ НА МЕРОПРИЯТИЕ -->
 <section class="sec sec-gray" id="event-register" style="padding-top:64px;">
   <div class="wrap">
-    <span class="sec-label" style="display:block;text-align:center" data-i18n="ereg_label">Регистрация на презентацию</span>
-    <h2 style="text-align:center" data-i18n="ereg_title">Записаться на живую демонстрацию</h2>
-    <p class="sec-sub" style="text-align:center;margin:0 auto 40px;max-width:520px;" data-i18n="ereg_sub">Оставьте контакты — мы пришлём подтверждение с адресом и деталями встречи.</p>
-    <div class="form-wrap" style="max-width:560px;">
-      <div class="form-group">
-        <label for="ereg-name" data-i18n="form_name">Имя *</label>
-        <input type="text" id="ereg-name" data-i18n-placeholder="form_name_ph" placeholder="Ваше имя" required>
-      </div>
-      <div class="form-row">
+    <div id="eregFormBlock">
+      <span class="sec-label" style="display:block;text-align:center" data-i18n="ereg_label">Регистрация на презентацию</span>
+      <h2 style="text-align:center" data-i18n="ereg_title">Записаться на живую демонстрацию</h2>
+      <p class="sec-sub" style="text-align:center;margin:0 auto 40px;max-width:520px;" data-i18n="ereg_sub">Оставьте контакты — мы пришлём подтверждение с адресом и деталями встречи.</p>
+      <div class="form-wrap" style="max-width:560px;">
         <div class="form-group">
-          <label for="ereg-email" data-i18n="form_email">Email *</label>
-          <input type="email" id="ereg-email" placeholder="vas@email.cz" required>
+          <label for="ereg-name" data-i18n="form_name">Имя *</label>
+          <input type="text" id="ereg-name" data-i18n-placeholder="form_name_ph" placeholder="Ваше имя" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ereg-email" data-i18n="form_email">Email *</label>
+            <input type="email" id="ereg-email" placeholder="vas@email.cz" required>
+          </div>
+          <div class="form-group">
+            <label for="ereg-phone" data-i18n="form_phone">Телефон</label>
+            <input type="tel" id="ereg-phone" placeholder="+420 ...">
+          </div>
         </div>
         <div class="form-group">
-          <label for="ereg-phone" data-i18n="form_phone">Телефон</label>
-          <input type="tel" id="ereg-phone" placeholder="+420 ...">
+          <label for="ereg-company" data-i18n="form_company">Название заведения</label>
+          <input type="text" id="ereg-company" data-i18n-placeholder="form_company_ph" placeholder="Кафе, ресторан, отель...">
         </div>
+        <p class="form-privacy" data-i18n-html="form_privacy">
+          Нажимая кнопку, вы соглашаетесь с <a href="#privacy-modal" class="open-privacy">Политикой конфиденциальности</a>.
+        </p>
+        <button type="button" class="btn-submit" id="eregSubmitBtn" data-i18n="ereg_btn">Записаться на встречу →</button>
       </div>
-      <div class="form-group">
-        <label for="ereg-company" data-i18n="form_company">Название заведения</label>
-        <input type="text" id="ereg-company" data-i18n-placeholder="form_company_ph" placeholder="Кафе, ресторан, отель...">
-      </div>
-      <p class="form-privacy" data-i18n-html="form_privacy">
-        Нажимая кнопку, вы соглашаетесь с <a href="#privacy-modal" class="open-privacy">Политикой конфиденциальности</a>.
-      </p>
-      <button type="button" class="btn-submit" id="eregSubmitBtn" data-i18n="ereg_btn">Записаться на встречу →</button>
-      <div class="form-success" id="eregSuccess" style="display:none;">
-        <div class="success-icon">✅</div>
-        <h3 data-i18n="ereg_ok_title">Вы зарегистрированы!</h3>
-        <p data-i18n="ereg_ok_text">Подтверждение отправлено вам на почту. Ждём вас 16 апреля в The Miners Coffee Letna!</p>
-      </div>
+    </div>
+    <div id="eregSuccess" style="display:none;text-align:center;padding:60px 24px;">
+      <div style="font-size:64px;margin-bottom:20px;">✅</div>
+      <h2 data-i18n="ereg_ok_title">Вы зарегистрированы!</h2>
+      <p style="font-size:17px;color:var(--muted);margin-top:12px;max-width:460px;margin-left:auto;margin-right:auto;" data-i18n="ereg_ok_text">Подтверждение отправлено вам на почту. Ждём вас 16 апреля в The Miners Coffee Letna!</p>
+      <button type="button" id="eregResetBtn" style="margin-top:28px;background:var(--gold);color:#000;font-weight:700;font-size:15px;padding:14px 36px;border-radius:8px;border:none;cursor:pointer;" data-i18n="ereg_reset_btn">Записать ещё одного человека →</button>
     </div>
   </div>
 </section>
@@ -1401,50 +1402,67 @@ if (form) {
   if (!btn) return;
 
   btn.addEventListener('click', function() {
-    var name = document.getElementById('ereg-name').value.trim();
-    var email = document.getElementById('ereg-email').value.trim();
-    var phone = document.getElementById('ereg-phone').value.trim();
+    var name    = document.getElementById('ereg-name').value.trim();
+    var email   = document.getElementById('ereg-email').value.trim();
+    var phone   = document.getElementById('ereg-phone').value.trim();
     var company = document.getElementById('ereg-company').value.trim();
     var lang = window._currentLang || 'cs';
     var t = window.translations && window.translations[lang];
 
-    if (!name) { alert(lang === 'ru' ? 'Пожалуйста, введите имя' : lang === 'en' ? 'Please enter your name' : 'Prosím zadejte jméno'); return; }
-    if (!email) { alert(lang === 'ru' ? 'Пожалуйста, введите email' : lang === 'en' ? 'Please enter your email' : 'Prosím zadejte e-mail'); return; }
+    if (!name)  { alert(lang==='ru'?'Пожалуйста, введите имя':lang==='en'?'Please enter your name':'Prosím zadejte jméno'); return; }
+    if (!email) { alert(lang==='ru'?'Пожалуйста, введите email':lang==='en'?'Please enter your email':'Prosím zadejte e-mail'); return; }
 
     btn.textContent = (t && t.sending) || 'Отправляем...';
     btn.disabled = true;
 
-    // Уведомление владельцу (тот же service + template что и основная форма)
-    var ownerParams = {
-      name: name,
-      email: email,
-      phone: phone || '—',
-      company: company || '—',
-      form_type: 'РЕГИСТРАЦИЯ НА ПРЕЗЕНТАЦИЮ 16 апреля',
-      message: 'Человек хочет прийти на живую демонстрацию SCRAEGG Pro.\nИмя: ' + name + '\nEmail: ' + email + '\nТелефон: ' + (phone || '—') + '\nЗаведение: ' + (company || '—')
-    };
+    // 1. Уведомление ВЛАДЕЛЬЦУ → Formspree (приходит на shumanskii.a@gmail.com)
+    var formData = new FormData();
+    formData.append('name',    name);
+    formData.append('email',   email);
+    formData.append('phone',   phone  || '—');
+    formData.append('company', company|| '—');
+    formData.append('_subject','🗓 Новая регистрация на презентацию SCRAEGG Pro 16 апреля');
+    formData.append('_replyto', email);
+    formData.append('message', '--- РЕГИСТРАЦИЯ НА ЖИВУЮ ДЕМОНСТРАЦИЮ ---\nИмя: '+name+'\nEmail: '+email+'\nТелефон: '+(phone||'—')+'\nЗаведение: '+(company||'—'));
 
-    // Подтверждение участнику
-    var guestParams = {
-      to_name: name,
-      to_email: email,
-      event_date: '16 апреля 2026, 13:00',
-      event_place: 'The Miners Coffee Letna, M. Horákové 684/16, Praha 7-Holešovice',
-      reply_to: 'hello@multichef.cz'
-    };
+    fetch('https://formspree.io/f/meerojkr', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData
+    })
+    .catch(function(err){ console.warn('Formspree error:', err); })
+    .then(function() {
+      // 2. Подтверждение УЧАСТНИКУ → EmailJS (template_y52szq7)
+      var guestParams = {
+        name:    name,
+        email:   email,
+        company: company || '—',
+        phone:   phone   || '—'
+      };
+      return emailjs.send('Mulichef', 'template_y52szq7', guestParams)
+        .catch(function(err){ console.warn('EmailJS error:', err); });
+    })
+    .then(function() {
+      document.getElementById('eregFormBlock').style.display = 'none';
+      document.getElementById('eregSuccess').style.display = 'block';
+    });
+  });
 
-    emailjs.send('Mulichef', 'template_y52szq7', ownerParams)
-      .catch(function(err){ console.warn('owner notify error:', err); })
-      .then(function() {
-        return emailjs.send('Mulichef', 'template_event_confirm', guestParams)
-          .catch(function(err){ console.warn('guest confirm error:', err); });
-      })
-      .then(function() {
-        var wrap = btn.closest('.form-wrap');
-        wrap.querySelectorAll('.form-group, .form-row, .form-privacy').forEach(function(el){ el.style.display = 'none'; });
-        btn.style.display = 'none';
-        successDiv.style.display = 'block';
-      });
+  // Кнопка "Записать ещё одного"
+  document.getElementById('eregResetBtn').addEventListener('click', function() {
+    document.getElementById('ereg-name').value = '';
+    document.getElementById('ereg-email').value = '';
+    document.getElementById('ereg-phone').value = '';
+    document.getElementById('ereg-company').value = '';
+    var submitBtn = document.getElementById('eregSubmitBtn');
+    var lang = window._currentLang || 'cs';
+    var t = window.translations && window.translations[lang];
+    submitBtn.textContent = (t && t.ereg_btn) || 'Записаться на встречу →';
+    submitBtn.disabled = false;
+    document.getElementById('eregSuccess').style.display = 'none';
+    document.getElementById('eregFormBlock').style.display = 'block';
+    document.getElementById('ereg-name').focus();
+  });
   });
 })();
 </script>
