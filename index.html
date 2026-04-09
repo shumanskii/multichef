@@ -1356,6 +1356,29 @@ if (emailInput && replytoInput) {
 }
 const success = document.getElementById('formSuccess');
 
+
+// Тексты подтверждения для формы ПОКУПКИ — по языкам
+var purchaseConfirmBody = {
+  ru: function(name, company, phone) {
+    return '<p>Здравствуйте, <strong>' + name + '</strong>!</p>'
+      + '<p>Спасибо за интерес к SCRAEGG Pro. Мы получили вашу заявку и свяжемся с вами в течение одного рабочего дня — ответим на все вопросы и пришлём предложение для вашего заведения.</p>'
+      + '<p><strong>Ваши данные:</strong><br>Заведение: ' + company + '<br>Телефон: ' + phone + '</p>'
+      + '<p>С уважением,<br><strong>Команда SCRAEGG Pro</strong><br>hello@multichef.cz · +420 608 507 366</p>';
+  },
+  cs: function(name, company, phone) {
+    return '<p>Dobrý den, <strong>' + name + '</strong>!</p>'
+      + '<p>Děkujeme za zájem o SCRAEGG Pro. Obdrželi jsme vaši poptávku a ozveme se vám do jednoho pracovního dne — zodpovíme všechny dotazy a připravíme nabídku pro vaši provozovnu.</p>'
+      + '<p><strong>Vaše údaje:</strong><br>Provozovna: ' + company + '<br>Telefon: ' + phone + '</p>'
+      + '<p>S pozdravem,<br><strong>Tým SCRAEGG Pro</strong><br>hello@multichef.cz · +420 608 507 366</p>';
+  },
+  en: function(name, company, phone) {
+    return '<p>Hello, <strong>' + name + '</strong>!</p>'
+      + '<p>Thank you for your interest in SCRAEGG Pro. We have received your enquiry and will get back to you within one business day with answers to all your questions and a tailored offer for your venue.</p>'
+      + '<p><strong>Your details:</strong><br>Venue: ' + company + '<br>Phone: ' + phone + '</p>'
+      + '<p>Kind regards,<br><strong>SCRAEGG Pro Team</strong><br>hello@multichef.cz · +420 608 507 366</p>';
+  }
+};
+
 if (form) {
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -1366,31 +1389,30 @@ if (form) {
     try {
       const response = await fetch(form.action, {
         method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: new FormData(form)
-    });
-    if (response.ok) {
-      // Отправляем автоответ пользователю через EmailJS
-      const templateParams = {
-        name: document.getElementById('name').value,
-        email: document.getElementById('email').value,
-        company: document.getElementById('company').value || '—',
-        phone: document.getElementById('phone').value || '—'
-      };
-      emailjs.send('Mulichef', 'template_y52szq7', templateParams).catch(function(err) {
-        console.warn('EmailJS error:', err);
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
       });
-      form.style.display = 'none';
-      success.style.display = 'block';
-    } else {
+      if (response.ok) {
+        var lang = window._currentLang || 'cs';
+        var name    = document.getElementById('name').value;
+        var company = document.getElementById('company').value || '—';
+        var phone   = document.getElementById('phone').value || '—';
+        var bodyFn  = purchaseConfirmBody[lang] || purchaseConfirmBody['cs'];
+        emailjs.send('Mulichef', 'template_y52szq7', {
+          email: document.getElementById('email').value,
+          message_body: bodyFn(name, company, phone)
+        }).catch(function(err) { console.warn('EmailJS error:', err); });
+        form.style.display = 'none';
+        success.style.display = 'block';
+      } else {
+        btn.textContent = translations[window._currentLang || 'ru'].error || 'Ошибка. Попробуйте ещё раз.';
+        btn.disabled = false;
+      }
+    } catch(e) {
       btn.textContent = translations[window._currentLang || 'ru'].error || 'Ошибка. Попробуйте ещё раз.';
       btn.disabled = false;
     }
-  } catch(e) {
-    btn.textContent = translations[window._currentLang || 'ru'].error || 'Ошибка. Попробуйте ещё раз.';
-    btn.disabled = false;
-  }
-});
+  });
 }
 </script>
 
@@ -1432,15 +1454,37 @@ if (form) {
     })
     .catch(function(err){ console.warn('Formspree error:', err); })
     .then(function() {
-      // 2. Подтверждение УЧАСТНИКУ → EmailJS (template_y52szq7)
-      var guestParams = {
-        name:    name,
-        email:   email,
-        company: company || '—',
-        phone:   phone   || '—'
-      };
-      return emailjs.send('Mulichef', 'template_y52szq7', guestParams)
-        .catch(function(err){ console.warn('EmailJS error:', err); });
+    // 2. Подтверждение УЧАСТНИКУ → EmailJS с текстом на языке сайта
+    var eventBody = {
+      ru: '<p>Здравствуйте, <strong>' + name + '</strong>!</p>'
+        + '<p>Вы зарегистрированы на живую демонстрацию <strong>SCRAEGG Pro</strong>.</p>'
+        + '<p>🗓 <strong>Дата:</strong> 16 апреля 2026, 13:00<br>'
+        + '📍 <strong>Место:</strong> The Miners Coffee Letna<br>'
+        + 'Milady Horákové 684/16, Praha 7 — Holešovice</p>'
+        + '<p>Вас ждёт дегустация 8 блюд прямо с машины — скрамбл, каши, супы, паста. Вход свободный.</p>'
+        + '<p>Вопросы: hello@multichef.cz · +420 608 507 366</p>'
+        + '<p>До встречи!<br><strong>Команда SCRAEGG Pro</strong></p>',
+      cs: '<p>Dobrý den, <strong>' + name + '</strong>!</p>'
+        + '<p>Vaše registrace na živou ukázku <strong>SCRAEGG Pro</strong> byla přijata.</p>'
+        + '<p>🗓 <strong>Datum:</strong> 16. dubna 2026, 13:00<br>'
+        + '📍 <strong>Místo:</strong> The Miners Coffee Letna<br>'
+        + 'Milady Horákové 684/16, Praha 7 — Holešovice</p>'
+        + '<p>Čeká vás degustace 8 jídel přímo ze stroje — míchaná vejce, kaše, polévky, těstoviny. Vstup zdarma.</p>'
+        + '<p>Dotazy: hello@multichef.cz · +420 608 507 366</p>'
+        + '<p>Těšíme se na vás!<br><strong>Tým SCRAEGG Pro</strong></p>',
+      en: '<p>Hello, <strong>' + name + '</strong>!</p>'
+        + '<p>You are registered for the live <strong>SCRAEGG Pro</strong> demonstration.</p>'
+        + '<p>🗓 <strong>Date:</strong> April 16, 2026, 13:00<br>'
+        + '📍 <strong>Venue:</strong> The Miners Coffee Letna<br>'
+        + 'Milady Horákové 684/16, Praha 7 — Holešovice</p>'
+        + '<p>You will taste 8 dishes straight from the machine — scrambled eggs, porridge, soups, pasta. Free entry.</p>'
+        + '<p>Questions: hello@multichef.cz · +420 608 507 366</p>'
+        + '<p>See you there!<br><strong>SCRAEGG Pro Team</strong></p>'
+    };
+    return emailjs.send('Mulichef', 'template_y52szq7', {
+      email: email,
+      message_body: eventBody[lang] || eventBody['cs']
+    }).catch(function(err){ console.warn('EmailJS error:', err); });
     })
     .then(function() {
       document.getElementById('eregFormBlock').style.display = 'none';
