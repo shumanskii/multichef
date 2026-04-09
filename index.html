@@ -1400,7 +1400,9 @@ if (form) {
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
     const btn = form.querySelector('.btn-submit');
-    btn.textContent = translations[currentLang || 'ru'].sending || 'Отправляем...';
+    const cl = window._currentLang || 'cs';
+    const tl = translations[cl] || translations['cs'];
+    btn.textContent = tl.sending || (cl==='en' ? 'Sending...' : cl==='cs' ? 'Odesíláme...' : 'Отправляем...');
     btn.disabled = true;
 
     try {
@@ -1422,11 +1424,13 @@ if (form) {
         form.style.display = 'none';
         success.style.display = 'block';
       } else {
-        btn.textContent = translations[window._currentLang || 'ru'].error || 'Ошибка. Попробуйте ещё раз.';
+        const errText = tl.error || (cl==='en' ? 'Error. Please try again.' : cl==='cs' ? 'Chyba. Zkuste to znovu.' : 'Ошибка. Попробуйте ещё раз.');
+        btn.textContent = errText;
         btn.disabled = false;
       }
     } catch(e) {
-      btn.textContent = translations[window._currentLang || 'ru'].error || 'Ошибка. Попробуйте ещё раз.';
+      const errText = tl.error || (cl==='en' ? 'Error. Please try again.' : cl==='cs' ? 'Chyba. Zkuste to znovu.' : 'Ошибка. Попробуйте ещё раз.');
+      btn.textContent = errText;
       btn.disabled = false;
     }
   });
@@ -1440,7 +1444,11 @@ if (form) {
   var successDiv = document.getElementById('eregSuccess');
   if (!btn) return;
 
-  btn.addEventListener('click', function() {
+  var _eregSending = false; // защита от двойной отправки
+
+  btn.addEventListener('click', async function() {
+    if (_eregSending) return; // блокируем повторный клик
+
     var name    = document.getElementById('ereg-name').value.trim();
     var email   = document.getElementById('ereg-email').value.trim();
     var phone   = document.getElementById('ereg-phone').value.trim();
@@ -1451,10 +1459,11 @@ if (form) {
     if (!name)  { alert(lang==='ru'?'Пожалуйста, введите имя':lang==='en'?'Please enter your name':'Prosím zadejte jméno'); return; }
     if (!email) { alert(lang==='ru'?'Пожалуйста, введите email':lang==='en'?'Please enter your email':'Prosím zadejte e-mail'); return; }
 
-    btn.textContent = (t && t.sending) || 'Отправляем...';
+    _eregSending = true;
+    btn.textContent = (t && t.sending) || (lang==='en' ? 'Sending...' : lang==='cs' ? 'Odesíláme...' : 'Отправляем...');
     btn.disabled = true;
 
-    // 1. Уведомление ВЛАДЕЛЬЦУ → Formspree (приходит на shumanskii.a@gmail.com)
+    // 1. Уведомление ВЛАДЕЛЬЦУ → Formspree
     var formData = new FormData();
     formData.append('name',    name);
     formData.append('email',   email);
@@ -1464,14 +1473,15 @@ if (form) {
     formData.append('_replyto', email);
     formData.append('message', '--- РЕГИСТРАЦИЯ НА ЖИВУЮ ДЕМОНСТРАЦИЮ ---\nИмя: '+name+'\nEmail: '+email+'\nТелефон: '+(phone||'—')+'\nЗаведение: '+(company||'—'));
 
-    fetch('https://formspree.io/f/meerojkr', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: formData
-    })
-    .catch(function(err){ console.warn('Formspree error:', err); })
-    .then(function() {
-    // 2. Подтверждение УЧАСТНИКУ → EmailJS с текстом на языке сайта (plain text)
+    try {
+      await fetch('https://formspree.io/f/meerojkr', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      });
+    } catch(err) { console.warn('Formspree error:', err); }
+
+    // 2. Подтверждение УЧАСТНИКУ → EmailJS (один раз!)
     var eventBody = {
       ru: 'Здравствуйте, ' + name + '!\n\n'
         + 'Вы зарегистрированы на живую демонстрацию SCRAEGG Pro.\n\n'
@@ -1498,21 +1508,22 @@ if (form) {
         + 'Questions: hello@multichef.cz · +420 608 507 366\n\n'
         + 'See you there!\nSCRAEGG Pro Team'
     };
-    return emailjs.send('Mulichef', 'template_y52szq7', {
-      email: email,
-      message_body: eventBody[lang] || eventBody['cs']
-    }).catch(function(err){ console.warn('EmailJS error:', err); });
-    })
-    .then(function() {
-      document.getElementById('eregFormBlock').style.display = 'none';
-      document.getElementById('eregSuccess').style.display = 'block';
-    });
+    try {
+      await emailjs.send('Mulichef', 'template_y52szq7', {
+        email: email,
+        message_body: eventBody[lang] || eventBody['cs']
+      });
+    } catch(err) { console.warn('EmailJS error:', err); }
+
+    document.getElementById('eregFormBlock').style.display = 'none';
+    document.getElementById('eregSuccess').style.display = 'block';
   });
 
   // Кнопка OK — скрыть success, вернуться наверх страницы
   document.getElementById('eregOkBtn').addEventListener('click', function() {
     document.getElementById('eregSuccess').style.display = 'none';
     document.getElementById('eregFormBlock').style.display = 'block';
+    _eregSending = false;
     window.scrollTo({ top: 0, behavior: 'smooth' });
   });
 
@@ -1522,10 +1533,11 @@ if (form) {
     document.getElementById('ereg-email').value = '';
     document.getElementById('ereg-phone').value = '';
     document.getElementById('ereg-company').value = '';
+    _eregSending = false;
     var submitBtn = document.getElementById('eregSubmitBtn');
     var lang = window._currentLang || 'cs';
     var t = window.translations && window.translations[lang];
-    submitBtn.textContent = (t && t.ereg_btn) || 'Записаться на встречу →';
+    submitBtn.textContent = (t && t.ereg_btn) || (lang==='en' ? 'Register for the event →' : lang==='cs' ? 'Přihlásit se na setkání →' : 'Записаться на встречу →');
     submitBtn.disabled = false;
     document.getElementById('eregSuccess').style.display = 'none';
     document.getElementById('eregFormBlock').style.display = 'block';
