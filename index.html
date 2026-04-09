@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -589,7 +590,12 @@ const translations = {
     ereg_label: "Регистрация на презентацию",
     ereg_title: "Записаться на живую демонстрацию",
     ereg_sub: "Оставьте контакты — мы пришлём подтверждение с адресом и деталями встречи.",
+    ereg_btn: "Записаться на встречу →",
+    ereg_ok_title: "Вы зарегистрированы!",
+    ereg_ok_text: "Подтверждение отправлено вам на почту. Ждём вас 16 апреля в The Miners Coffee Letna!",
     ereg_reset_btn: "Записать ещё одного →",
+    sending: "Отправляем...", error: "Ошибка. Попробуйте ещё раз.",
+  },
   cs: {
     nav_event: "Prezentace 5. dubna",
     nav_cta: "Získat nabídku",
@@ -1506,7 +1512,6 @@ if (form) {
     document.getElementById('eregSuccess').style.display = 'none';
     document.getElementById('eregFormBlock').style.display = 'block';
     document.getElementById('ereg-name').focus();
-  });
   });
 })();
 </script>
