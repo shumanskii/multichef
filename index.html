@@ -4,6 +4,83 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SCRAEGG Pro — яичница за 15 секунд | Чехия</title>
+
+<!-- SEO BASE -->
+<meta name="description" content="SCRAEGG Pro — профессиональная паровая машина для скрамбла, каши и супов. Горячее блюдо за 15 секунд. Поставки, аренда, обучение и сервис для кафе, ресторанов и отелей в Чехии.">
+<meta name="keywords" content="SCRAEGG Pro, яичница за 15 секунд, паровая машина для скрамбла, оборудование для кафе Чехия, скрамбл машина, горячая еда быстро, multichef.cz">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://multichef.cz/">
+
+<!-- HREFLANG (multilingual) -->
+<link rel="alternate" hreflang="ru" href="https://multichef.cz/">
+<link rel="alternate" hreflang="cs" href="https://multichef.cz/">
+<link rel="alternate" hreflang="en" href="https://multichef.cz/">
+<link rel="alternate" hreflang="x-default" href="https://multichef.cz/">
+
+<!-- OPEN GRAPH (соцсети, мессенджеры) -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://multichef.cz/">
+<meta property="og:title" content="SCRAEGG Pro — яичница за 15 секунд | Чехия">
+<meta property="og:description" content="Профессиональная паровая машина для скрамбла, каши и супов. Одна кнопка — готово за 15 секунд. Поставки и сервис для заведений в Чехии.">
+<meta property="og:image" content="https://multichef.cz/scraegg_hero.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="cs_CZ">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:site_name" content="SCRAEGG Pro — multichef.cz">
+
+<!-- TWITTER CARD -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SCRAEGG Pro — яичница за 15 секунд | Чехия">
+<meta name="twitter:description" content="Профессиональная паровая машина для скрамбла, каши и супов. Одна кнопка — готово за 15 секунд.">
+<meta name="twitter:image" content="https://multichef.cz/scraegg_hero.png">
+
+<!-- STRUCTURED DATA (JSON-LD) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Product",
+      "name": "SCRAEGG Pro",
+      "description": "Профессиональная паровая машина для приготовления скрамбла, каши и супов за 15 секунд. Одна кнопка, стабильный результат, минимум обслуживания.",
+      "brand": {
+        "@type": "Brand",
+        "name": "SCRAEGG"
+      },
+      "image": "https://multichef.cz/scraegg_hero.png",
+      "url": "https://multichef.cz/",
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "CZK",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@type": "Organization",
+          "name": "ZĚMOV & PARTNEŘI s.r.o."
+        }
+      },
+      "award": "Kitchen Innovations Award 2025 — National Restaurant Association Show"
+    },
+    {
+      "@type": "LocalBusiness",
+      "name": "SCRAEGG Pro — multichef.cz",
+      "description": "Официальный представитель SCRAEGG GmbH в Чехии. Поставки, аренда, демонстрации и сервис для заведений общественного питания.",
+      "url": "https://multichef.cz/",
+      "telephone": "+420777589945",
+      "email": "hello@multichef.cz",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Praha 9",
+        "addressCountry": "CZ"
+      },
+      "image": "https://multichef.cz/scraegg_hero.png",
+      "priceRange": "$$",
+      "areaServed": "CZ"
+    }
+  ]
+}
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>emailjs.init('WaBE7_3-Wn8sPWpHr');</script>
@@ -357,7 +434,13 @@ footer {
   .hero-inner { grid-template-columns: 1fr; gap: 36px; }
   h1 { font-size: 34px; }
   h2 { font-size: 26px; }
-  .hero-img-wrap { display: none; }
+  .hero-img-wrap {
+    display: block;
+    border-radius: 16px;
+    aspect-ratio: 1 / 0.75;
+    max-width: 320px;
+    margin: 0 auto;
+  }
   .stats-row { width: 100%; }
   .stat { flex: 1; padding: 14px 10px; }
   .steps { grid-template-columns: 1fr 1fr; }
