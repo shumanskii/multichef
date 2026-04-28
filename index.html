@@ -562,6 +562,12 @@ const translations = {
     form_type_options: ["Выберите...", "Кафе / кофейня", "Ресторан", "Отель", "Магазин / АЗС", "Офисная кухня / кантина", "Другое"],
 
     sending: "Отправляем...", error: "Ошибка. Попробуйте ещё раз.",
+    service_label: "Сервис SCRAEGG",
+    service_item1: "Аренда по запросу",
+    service_item2: "Доставка по запросу",
+    service_item3: "Ввод в эксплуатацию и обучение нашими специалистами по запросу",
+    service_item4: "Компетентная и доброжелательная техподдержка",
+    service_item5: "Выездное обслуживание",
   },
   cs: {
     nav_cta: "Získat nabídku",
@@ -626,6 +632,12 @@ const translations = {
     form_type_options: ["Vyberte...", "Kavárna / coffee shop", "Restaurace", "Hotel", "Obchod / čerpací stanice", "Firemní kuchyně / kantýna", "Jiné"],
 
     sending: "Odesíláme...", error: "Chyba. Zkuste to znovu.",
+    service_label: "Servis SCRAEGG",
+    service_item1: "Pronájem na vyžádání",
+    service_item2: "Doručení na vyžádání",
+    service_item3: "Uvedení do provozu a školení našimi specialisty na vyžádání",
+    service_item4: "Kompetentní a přátelská technická podpora",
+    service_item5: "Servis u zákazníka",
   },
   en: {
     nav_cta: "Get a Quote",
@@ -689,6 +701,12 @@ const translations = {
     form_type_options: ["Select...", "Café / coffee shop", "Restaurant", "Hotel", "Shop / petrol station", "Office kitchen / canteen", "Other"],
 
     sending: "Sending...", error: "Error. Please try again.",
+    service_label: "SCRAEGG Service",
+    service_item1: "Rental on request",
+    service_item2: "Delivery on request",
+    service_item3: "Installation and training by our specialists on request",
+    service_item4: "Competent and friendly technical support",
+    service_item5: "On-site service",
   }
 };
 
@@ -826,13 +844,14 @@ document.addEventListener('DOMContentLoaded', function() {
     <span class="sec-label" data-i18n="how_label">Как это работает</span>
     <h2 data-i18n="how_title">Три шага до готового блюда</h2>
     <p class="sec-sub" data-i18n="how_sub">Никаких навыков, обучения или сложных процессов. Любой сотрудник справится с первой попытки.</p>
-    <div class="in-action-video">
+    <div class="in-action-video" style="padding-bottom: 0; height: 560px; max-width: 315px; margin: 0 auto 40px;">
       <iframe
-        src="https://www.youtube.com/embed/gmwqIZ3ysaU?rel=0&modestbranding=1"
+        src="https://www.youtube.com/embed/N82JaJGMqB8?rel=0&modestbranding=1"
         title="SCRAEGG Pro — live demo"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen
-        loading="lazy">
+        loading="lazy"
+        style="position:absolute;top:0;left:0;width:100%;height:100%;">
       </iframe>
     </div>
     <div class="steps">
@@ -894,6 +913,35 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="feat-card">
         <div class="feat-icon">💰</div>
         <div><h3 data-i18n="ben6_title">Прибыльный продукт</h3><p data-i18n="ben6_text">Низкая себестоимость, высокая наценка. Скрамбл, каша и суп — популярные позиции с отличной маржой для вашего заведения.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- СЕРВИС -->
+<section class="sec sec-gray">
+  <div class="wrap" style="text-align:center;">
+    <span class="sec-label" data-i18n="service_label">Сервис SCRAEGG</span>
+    <div style="display:inline-flex;flex-direction:column;align-items:flex-start;gap:14px;margin-top:36px;">
+      <div style="display:flex;align-items:center;gap:12px;font-size:16px;color:var(--dark);">
+        <span style="color:var(--gold);font-size:20px;font-weight:700;">✔</span>
+        <span data-i18n="service_item1">Аренда по запросу</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:16px;color:var(--dark);">
+        <span style="color:var(--gold);font-size:20px;font-weight:700;">✔</span>
+        <span data-i18n="service_item2">Доставка по запросу</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:16px;color:var(--dark);">
+        <span style="color:var(--gold);font-size:20px;font-weight:700;">✔</span>
+        <span data-i18n="service_item3">Ввод в эксплуатацию и обучение нашими специалистами по запросу</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:16px;color:var(--dark);">
+        <span style="color:var(--gold);font-size:20px;font-weight:700;">✔</span>
+        <span data-i18n="service_item4">Компетентная и доброжелательная техподдержка</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:12px;font-size:16px;color:var(--dark);">
+        <span style="color:var(--gold);font-size:20px;font-weight:700;">✔</span>
+        <span data-i18n="service_item5">Выездное обслуживание</span>
       </div>
     </div>
   </div>
